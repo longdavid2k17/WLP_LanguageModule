@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import pl.com.kantoch.WLP_LanguageModule.entities.Label;
 import pl.com.kantoch.WLP_LanguageModule.entities.View;
 import pl.com.kantoch.WLP_LanguageModule.entities.payloads.request.ViewTranslationRequest;
+import pl.com.kantoch.WLP_LanguageModule.entities.payloads.response.AMQPConfiguration;
 import pl.com.kantoch.WLP_LanguageModule.entities.payloads.response.LabelDTO;
-import pl.com.kantoch.WLP_LanguageModule.entities.payloads.response.RabbitMQConfigurationDTO;
 import pl.com.kantoch.WLP_LanguageModule.services.LabelService;
 import pl.com.kantoch.WLP_LanguageModule.services.ViewService;
 
@@ -23,7 +23,7 @@ public class RabbitMQTranslationProvider implements TranslationProvider {
     private final RabbitTemplate rabbitTemplate;
     private final LabelService labelService;
     private final ViewService viewService;
-    private final RabbitMQConfigurationLoader rabbitMQConfigurationLoader;
+    private final AMQPConfigurationLoader amqpConfigurationLoader;
     private CachingConnectionFactory factory;
     private final Gson gson;
 
@@ -32,15 +32,15 @@ public class RabbitMQTranslationProvider implements TranslationProvider {
                                        RabbitMQConfigurationLoader rabbitMQConfigurationLoader) {
         this.labelService = labelService;
         this.viewService = viewService;
-        this.rabbitMQConfigurationLoader = rabbitMQConfigurationLoader;
+        this.amqpConfigurationLoader = rabbitMQConfigurationLoader;
         this.gson = new Gson();
 
-        initRabbitConfiguration();
+        initConfiguration();
         this.rabbitTemplate = new RabbitTemplate(factory);
     }
 
-    private void initRabbitConfiguration() {
-        RabbitMQConfigurationDTO configuration = rabbitMQConfigurationLoader.loadAMQPConfiguration();
+    private void initConfiguration() {
+        AMQPConfiguration configuration = amqpConfigurationLoader.loadAMQPConfiguration();
         CachingConnectionFactory factory = new CachingConnectionFactory(configuration.getHost());
         factory.setPort(configuration.getPort());
         factory.setUsername(configuration.getUsername());

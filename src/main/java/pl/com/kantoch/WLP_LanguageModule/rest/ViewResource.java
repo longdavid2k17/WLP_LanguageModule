@@ -1,15 +1,13 @@
 package pl.com.kantoch.WLP_LanguageModule.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.kantoch.WLP_LanguageModule.entities.View;
 import pl.com.kantoch.WLP_LanguageModule.services.ViewService;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/view")
+@CrossOrigin("*")
 public class ViewResource {
 
     private final ViewService viewService;

@@ -1,9 +1,6 @@
 package pl.com.kantoch.WLP_LanguageModule.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.com.kantoch.WLP_LanguageModule.entities.Label;
 import pl.com.kantoch.WLP_LanguageModule.services.LabelService;
 
@@ -11,6 +8,7 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/label")
+@CrossOrigin("*")
 public class LabelResource {
 
     private final LabelService labelService;
